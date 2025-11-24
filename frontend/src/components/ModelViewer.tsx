@@ -9,6 +9,7 @@ interface ModelViewerProps {
 export default function ModelViewer({ modelUrl }: ModelViewerProps) {
   const viewerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModelLoading, setIsModelLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [clientModelUrl, setClientModelUrl] = useState('');
 
@@ -48,6 +49,21 @@ export default function ModelViewer({ modelUrl }: ModelViewerProps) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isLoading && clientModelUrl && viewerRef.current) {
+      const modelViewer = viewerRef.current.querySelector('model-viewer');
+      if (modelViewer) {
+        modelViewer.addEventListener('load', () => {
+          setIsModelLoading(false);
+        });
+        modelViewer.addEventListener('error', () => {
+          setError('Failed to load 3D model');
+          setIsModelLoading(false);
+        });
+      }
+    }
+  }, [isLoading, clientModelUrl]);
+
   if (error) {
     return (
       <div className="w-full h-96 bg-dark-400 rounded-lg flex items-center justify-center">
@@ -69,7 +85,19 @@ export default function ModelViewer({ modelUrl }: ModelViewerProps) {
   }
 
   return (
-    <div ref={viewerRef} className="w-full h-96 md:h-[600px] bg-dark-400 rounded-lg overflow-hidden">
+    <div ref={viewerRef} className="w-full h-96 md:h-[600px] bg-dark-400 rounded-lg overflow-hidden relative">
+      {isModelLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-dark-400 z-10">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce"></div>
+              <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+            <p className="text-sm text-gray-400">Loading 3D model...</p>
+          </div>
+        </div>
+      )}
       <model-viewer
         src={clientModelUrl}
         alt="3D Model"
@@ -83,20 +111,7 @@ export default function ModelViewer({ modelUrl }: ModelViewerProps) {
         }}
         loading="eager"
         reveal="auto"
-      >
-        <div slot="progress-bar" style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          display: 'flex',
-          gap: '0.5rem',
-        }}>
-          <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce"></div>
-          <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-          <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-        </div>
-      </model-viewer>
+      />
     </div>
   );
 }
