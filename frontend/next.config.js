@@ -16,9 +16,11 @@ const nextConfig = {
         pathname: '/uploads/**',
       },
     ],
+    unoptimized: false,
   },
   env: {
     NEXT_PUBLIC_STRAPI_URL: process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
+    STRAPI_API_URL: process.env.STRAPI_API_URL || 'http://strapi:1337',
   },
 };
 

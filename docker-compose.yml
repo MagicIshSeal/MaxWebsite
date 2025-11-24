@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: strapi
       POSTGRES_PASSWORD: strapi_password
-      POSTGRES_DB: strapi_db
+      POSTGRES_DB: strapi
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -28,11 +28,11 @@ services:
     container_name: portfolio_cms
     restart: unless-stopped
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       DATABASE_CLIENT: postgres
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
-      DATABASE_NAME: strapi_db
+      DATABASE_NAME: strapi
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi_password
       DATABASE_SSL: false
@@ -62,8 +62,9 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_STRAPI_URL: http://strapi:1337
+      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337
       STRAPI_API_URL: http://strapi:1337
+      HOSTNAME: 0.0.0.0
     ports:
       - "3000:3000"
     networks:

@@ -6,9 +6,13 @@ A self-hosted personal portfolio website with a headless CMS for managing conten
 
 - **Content Management System (CMS)** - Manage all content through Strapi's admin panel
 - **No Code Changes Required** - Add/edit projects, experience, and about section via web interface
+- **Project Detail Pages** - Click any project to view full details with image gallery
+- **3D Model Viewer** - Upload and display interactive 3D models (.glb, .gltf)
+- **Multiple Images** - Upload multiple photos per project with responsive gallery
+- **Rich Text Support** - Format descriptions with headings, lists, links, and more
 - **Self-Hosted** - Full control, deploy on your own Linux server
 - **Docker-Based** - Easy deployment and management
-- **Responsive Design** - Mobile-friendly interface
+- **Responsive Design** - Mobile-friendly interface with dark theme
 - **SEO Optimized** - Built with Next.js for optimal performance
 
 ## 📋 Prerequisites
@@ -197,20 +201,55 @@ docker-compose --profile production up -d
 1. Go to **Content Manager** → **Projects**
 2. Click **Create new entry**
 3. Fill in:
-   - Title
-   - Description (short)
-   - Long Description (rich text)
-   - Type: personal/school/professional
-   - Technologies (JSON array): `["React", "Node.js", "Docker"]`
-   - Start Date / End Date
-   - Is Ongoing (checkbox)
-   - Featured (checkbox for homepage highlight)
-   - Images (upload screenshots)
-   - GitHub URL
-   - Live URL
-   - Order (number for sorting)
+   - **Title** - Project name
+   - **Description** - Short description (shown on homepage cards)
+   - **Long Description** - Full project details (supports formatting, shown on detail page)
+   - **Type**: personal/school/professional
+   - **Technologies** (JSON array): `["React", "Node.js", "Docker"]`
+   - **Start Date** / **End Date**
+   - **Is Ongoing** - Check if project is still active
+   - **Featured** - Check to highlight on homepage
+   - **Images** - Upload multiple images (first image shown on card, all shown in gallery)
+   - **Model3d** - Upload 3D model file (.glb or .gltf) for interactive viewer
+   - **GitHub URL** - Link to source code
+   - **Live URL** - Link to live demo/website
+   - **Order** - Number for sorting (lower = shown first)
 4. Click **Save** and **Publish**
-5. Repeat for each project
+5. **View Details**: Click the project card on your website to see the full detail page
+
+##### 🎨 Uploading 3D Models
+
+The project detail page supports interactive 3D model viewing!
+
+**Supported Formats:**
+- `.glb` (recommended) - Binary glTF format
+- `.gltf` - Text-based glTF with separate assets
+
+**How to Get 3D Models:**
+
+From **Fusion 360**:
+1. File → Export → Save as `.obj`
+2. Convert to `.glb` using: https://products.aspose.app/3d/conversion/obj-to-glb
+3. Upload the `.glb` file to Strapi
+
+From **Blender**:
+1. File → Export → glTF 2.0 (.glb)
+2. Upload directly to Strapi
+
+From **Tinkercad**:
+1. Export as `.obj`
+2. Convert to `.glb` using online converter
+3. Upload to Strapi
+
+**3D Viewer Controls:**
+- **Click + Drag** to rotate
+- **Scroll** to zoom
+- **Two fingers (mobile)** to pan and rotate
+- **Auto-rotate** when idle
+
+**Note**: The 3D model section only appears if you upload a model - otherwise it's hidden.
+
+6. Repeat for each project
 
 #### Add Experience
 

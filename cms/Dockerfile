@@ -6,14 +6,15 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production
+RUN npm install
 
 # Copy app files
 COPY . .
 
-# Build Strapi admin panel
-RUN npm run build
+# Create uploads directory
+RUN mkdir -p /app/public/uploads && chmod -R 777 /app/public
 
 EXPOSE 1337
 
-CMD ["npm", "run", "start"]
+# Run in development mode (hot reload enabled)
+CMD ["npm", "run", "develop"]

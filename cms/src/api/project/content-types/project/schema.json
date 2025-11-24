@@ -52,6 +52,12 @@
       "required": false,
       "allowedTypes": ["images"]
     },
+    "model3d": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"]
+    },
     "githubUrl": {
       "type": "string"
     },
