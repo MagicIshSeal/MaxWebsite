@@ -1,0 +1,31 @@
+{
+  "name": "portfolio-cms",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Portfolio CMS built with Strapi",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/strapi": "^4.15.5",
+    "@strapi/plugin-users-permissions": "^4.15.5",
+    "@strapi/plugin-i18n": "^4.15.5",
+    "pg": "^8.11.3",
+    "better-sqlite3": "^9.0.0"
+  },
+  "devDependencies": {},
+  "author": {
+    "name": "Max"
+  },
+  "strapi": {
+    "uuid": "generate-on-first-run"
+  },
+  "engines": {
+    "node": ">=16.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
