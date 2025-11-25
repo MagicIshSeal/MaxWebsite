@@ -1,14 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-
-const inter = Inter({ subsets: ['latin'] });
+import SystemBar from '@/components/SystemBar';
+import SystemStatus from '@/components/SystemStatus';
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Max',
-  description: 'Personal portfolio showcasing projects and experience',
+  title: 'Engineering Portfolio',
+  description: 'Technical Project Portfolio',
 };
 
 export default function RootLayout({
@@ -18,10 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+      <body className="bg-grid">
+        <SystemBar />
+        <main className="pt-16 min-h-screen">
+          {children}
+        </main>
+        <SystemStatus />
       </body>
     </html>
   );

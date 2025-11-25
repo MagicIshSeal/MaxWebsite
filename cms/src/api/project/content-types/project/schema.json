@@ -64,9 +64,28 @@
     "liveUrl": {
       "type": "string"
     },
+    "pdfReport": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"]
+    },
     "order": {
       "type": "integer",
       "default": 0
+    },
+    "specifications": {
+      "type": "json"
+    },
+    "codeSnippet": {
+      "type": "text"
+    },
+    "codeLanguage": {
+      "type": "string",
+      "default": "javascript"
+    },
+    "tags": {
+      "type": "json"
     }
   }
 }

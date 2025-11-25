@@ -382,7 +382,13 @@ export interface ApiAboutAbout extends Schema.SingleType {
       'admin::user'
     > &
       Attribute.Private;
+    ctaButtonLink: Attribute.String & Attribute.DefaultTo<'#projects'>;
+    ctaButtonText: Attribute.String & Attribute.DefaultTo<'View Projects'>;
+    detailedBio: Attribute.RichText;
     email: Attribute.Email;
+    heroMedia: Attribute.Media<'images' | 'videos'>;
+    heroSubtitle: Attribute.Text;
+    heroTitle: Attribute.String;
     location: Attribute.String;
     name: Attribute.String & Attribute.Required;
     phone: Attribute.String;
@@ -457,6 +463,8 @@ export interface ApiProjectProject extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
+    codeLanguage: Attribute.String & Attribute.DefaultTo<'javascript'>;
+    codeSnippet: Attribute.Text;
     createdAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::project.project',
@@ -474,8 +482,11 @@ export interface ApiProjectProject extends Schema.CollectionType {
     longDescription: Attribute.RichText;
     model3d: Attribute.Media<'files'>;
     order: Attribute.Integer & Attribute.DefaultTo<0>;
+    pdfReport: Attribute.Media<'files'>;
     publishedAt: Attribute.DateTime;
+    specifications: Attribute.JSON;
     startDate: Attribute.Date;
+    tags: Attribute.JSON;
     technologies: Attribute.JSON;
     title: Attribute.String & Attribute.Required;
     type: Attribute.Enumeration<['personal', 'school', 'professional']> &
@@ -487,6 +498,39 @@ export interface ApiProjectProject extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiToolTool extends Schema.CollectionType {
+  collectionName: 'tools';
+  info: {
+    description: 'Hardware and software tools';
+    displayName: 'Tool';
+    pluralName: 'tools';
+    singularName: 'tool';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Attribute.Enumeration<['hardware', 'software', 'other']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'software'>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::tool.tool', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    description: Attribute.Text;
+    icon: Attribute.Media<'images'>;
+    name: Attribute.String & Attribute.Required;
+    order: Attribute.Integer & Attribute.DefaultTo<0>;
+    proficiency: Attribute.Enumeration<
+      ['beginner', 'intermediate', 'advanced', 'expert']
+    > &
+      Attribute.DefaultTo<'intermediate'>;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<'api::tool.tool', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -930,6 +974,7 @@ declare module '@strapi/types' {
       'api::about.about': ApiAboutAbout;
       'api::experience.experience': ApiExperienceExperience;
       'api::project.project': ApiProjectProject;
+      'api::tool.tool': ApiToolTool;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

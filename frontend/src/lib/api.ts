@@ -1,5 +1,40 @@
 import axios from 'axios';
 
+// TypeScript interfaces for API responses
+export interface AboutAttributes {
+  name: string;
+  tagline: string;
+  bio: string;
+  detailedBio?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  ctaButtonText?: string;
+  ctaButtonLink?: string;
+  profileImage?: {
+    data?: {
+      attributes: {
+        url: string;
+      };
+    };
+  };
+  heroMedia?: {
+    data?: {
+      attributes: {
+        url: string;
+        mime?: string;
+      };
+    };
+  };
+  socialLinks?: {
+    platform: string;
+    url: string;
+  }[];
+  skills?: string[];
+}
+
 // Use internal Docker network URL for server-side requests
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://strapi:1337';
 // Use localhost for client-side requests (browser)
@@ -48,6 +83,16 @@ export async function getExperiences() {
     return response.data.data;
   } catch (error) {
     console.error('Error fetching experiences:', error);
+    return [];
+  }
+}
+
+export async function getTools() {
+  try {
+    const response = await api.get('/tools?populate=*&sort=order:asc');
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching tools:', error);
     return [];
   }
 }

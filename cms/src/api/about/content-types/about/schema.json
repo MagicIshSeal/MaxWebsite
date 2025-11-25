@@ -24,6 +24,9 @@
       "type": "richtext",
       "required": true
     },
+    "detailedBio": {
+      "type": "richtext"
+    },
     "email": {
       "type": "email"
     },
@@ -39,6 +42,12 @@
       "required": false,
       "allowedTypes": ["images"]
     },
+    "heroMedia": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "videos"]
+    },
     "resumeFile": {
       "type": "media",
       "multiple": false,
@@ -50,6 +59,20 @@
     },
     "skills": {
       "type": "json"
+    },
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroSubtitle": {
+      "type": "text"
+    },
+    "ctaButtonText": {
+      "type": "string",
+      "default": "View Projects"
+    },
+    "ctaButtonLink": {
+      "type": "string",
+      "default": "#projects"
     }
   }
 }
