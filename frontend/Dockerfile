@@ -7,6 +7,10 @@ RUN npm install --production
 FROM node:18-alpine AS builder
 WORKDIR /app
 
+# Accept version as build argument
+ARG APP_VERSION=v1.0.0
+ENV NEXT_PUBLIC_APP_VERSION=${APP_VERSION}
+
 COPY package*.json ./
 RUN npm install
 

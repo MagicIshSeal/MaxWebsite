@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function SystemBar() {
+interface SystemBarProps {
+  userName?: string;
+}
+
+export default function SystemBar({ userName = 'OPERATOR' }: SystemBarProps) {
   const pathname = usePathname();
   const [utcTime, setUtcTime] = useState('');
 
@@ -30,7 +34,7 @@ export default function SystemBar() {
         {/* Left: Name & Status */}
         <div className="flex items-center gap-6">
           <Link href="/" className="text-white font-mono text-sm uppercase tracking-wider hover:text-cyan-400 transition-colors">
-            YOUR_NAME
+            {userName.replace(/ /g, '_').toUpperCase()}
           </Link>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-mono text-slate-500 uppercase">STATUS:</span>

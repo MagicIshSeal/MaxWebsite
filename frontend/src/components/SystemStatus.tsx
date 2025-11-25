@@ -1,5 +1,6 @@
 export default function SystemStatus() {
   const buildDate = new Date().toISOString().split('T')[0];
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || 'v1.0.0';
   
   return (
     <footer className="border-t border-slate-800 bg-slate-950/80 backdrop-blur-sm">
@@ -12,7 +13,7 @@ export default function SystemStatus() {
           
           <div className="flex items-center gap-6">
             <span className="hidden md:inline">LAST_DEPLOY: <span className="text-cyan-400">{buildDate}</span></span>
-            <span>BUILD: <span className="text-cyan-400">v3.0.1</span></span>
+            <span>BUILD: <span className="text-cyan-400">{version}</span></span>
           </div>
         </div>
       </div>
