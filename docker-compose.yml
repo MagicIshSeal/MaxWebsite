@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
-  # PostgreSQL Database
-  postgres:
+  # Renamed service key to prevent conflicts with other postgres instances
+  max_postgres:
     image: postgres:15-alpine
-    container_name: portfolio_db
+    container_name: max_portfolio_db
     restart: unless-stopped
     environment:
       POSTGRES_USER: strapi
@@ -14,33 +12,34 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - portfolio_network
+      - web_proxy
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U strapi"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # Strapi CMS
-  strapi:
+  # Renamed service key
+  max_strapi:
     build:
       context: ./cms
       dockerfile: Dockerfile
-    container_name: portfolio_cms
+    container_name: max_portfolio_cms
     restart: unless-stopped
     environment:
       NODE_ENV: development
       DATABASE_CLIENT: postgres
-      DATABASE_HOST: postgres
+      DATABASE_HOST: max_postgres # <--- Must match the new service name above
       DATABASE_PORT: 5432
       DATABASE_NAME: strapi
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi_password
       DATABASE_SSL: false
-      JWT_SECRET: your-jwt-secret-change-this-in-production
-      ADMIN_JWT_SECRET: your-admin-jwt-secret-change-this
-      APP_KEYS: your-app-key1,your-app-key2,your-app-key3,your-app-key4
-      API_TOKEN_SALT: your-api-token-salt
-      TRANSFER_TOKEN_SALT: your-transfer-token-salt
+      JWT_SECRET: your-jwt-secret
+      ADMIN_JWT_SECRET: your-admin-jwt-secret
+      APP_KEYS: key1,key2,key3,key4
+      API_TOKEN_SALT: salt
+      TRANSFER_TOKEN_SALT: salt
     ports:
       - "1337:1337"
     volumes:
@@ -49,53 +48,44 @@ services:
       - /app/node_modules
     networks:
       - portfolio_network
+      - web_proxy
     depends_on:
-      postgres:
+      max_postgres:
         condition: service_healthy
 
-  # Next.js Frontend
-  frontend:
+  # Frontend
+  max_frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
         APP_VERSION: ${APP_VERSION:-v1.0.0}
-    container_name: portfolio_frontend
+    container_name: max_portfolio_frontend
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337
-      STRAPI_API_URL: http://strapi:1337
+      # IMPORTANT: If your browser needs to download images, this must be the Public URL (e.g. nip.io address)
+      # If using "localhost", images will break for anyone other than you.
+      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337 
+      
+      # This is for internal Docker communication (Server to Server), so this stays internal
+      STRAPI_API_URL: http://max_strapi:1337 
       HOSTNAME: 0.0.0.0
     ports:
       - "3000:3000"
     networks:
       - portfolio_network
+      - web_proxy
     depends_on:
-      - strapi
+      - max_strapi
 
-  # Nginx Reverse Proxy (Optional - for production)
-  nginx:
-    image: nginx:alpine
-    container_name: portfolio_nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-    networks:
-      - portfolio_network
-    depends_on:
-      - frontend
-      - strapi
-    profiles:
-      - production
+# NGINX SERVICE REMOVED
 
 networks:
   portfolio_network:
     driver: bridge
+  web_proxy:
+    external: true
 
 volumes:
   postgres_data:
