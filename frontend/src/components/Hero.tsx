@@ -10,13 +10,8 @@ export default function Hero({ about }: { about: AboutData | null }) {
     return (
       <section className="section bg-gradient-to-br from-dark-400 via-dark-500 to-dark-600">
         <div className="container mx-auto px-4 text-center animate-fade-in">
-          <h1 className="text-6xl font-bold mb-4 glow-text">Welcome</h1>
-          <p className="text-xl text-gray-400">Portfolio site loading...</p>
-          <div className="flex gap-2 justify-center mt-4">
-            <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce"></div>
-            <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-            <div className="w-3 h-3 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-          </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-white">Welcome</h1>
+          <p className="text-xl text-gray-400">Portfolio content coming soon.</p>
         </div>
       </section>
     );
@@ -45,7 +40,7 @@ export default function Hero({ about }: { about: AboutData | null }) {
   const displaySubtitle = heroSubtitle || tagline;
 
   return (
-    <section id="hero" className="min-h-screen bg-gradient-to-br from-dark-400 via-dark-500 to-dark-600 relative overflow-hidden flex items-center">
+    <section id="hero" className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-dark-400 via-dark-500 to-dark-600 relative overflow-hidden flex items-center">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -94,7 +89,7 @@ export default function Hero({ about }: { about: AboutData | null }) {
           )}
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 glow-text leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 glow-text leading-tight break-words">
             {displayTitle}
           </h1>
 
@@ -104,7 +99,7 @@ export default function Hero({ about }: { about: AboutData | null }) {
           </p>
 
           {/* CTA Button */}
-          <div className="flex gap-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
             <a
               href={ctaButtonLink || '#projects'}
               className="btn-primary text-lg px-8 py-4"
@@ -114,9 +109,9 @@ export default function Hero({ about }: { about: AboutData | null }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            {socialLinks && socialLinks.length > 0 && (
+            {socialLinks?.some(link => link.platform.toLowerCase() === 'github') && (
               <a
-                href={socialLinks.find(link => link.platform.toLowerCase() === 'github')?.url || '#'}
+                href={socialLinks.find(link => link.platform.toLowerCase() === 'github')?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary text-lg px-8 py-4"

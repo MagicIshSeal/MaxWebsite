@@ -1,3 +1,5 @@
+import SectionHeading from './SectionHeading';
+
 interface Experience {
   id: number;
   attributes: {
@@ -31,8 +33,7 @@ export default function ExperienceSection({
       <div className="absolute left-1/2 transform -translate-x-1/2 top-32 bottom-32 w-0.5 bg-gradient-to-b from-primary-500 via-primary-600 to-primary-500 hidden lg:block"></div>
       
       <div className="container mx-auto px-4">
-        <h2 className="text-5xl font-bold text-center mb-4 glow-text">Experience</h2>
-        <p className="text-center text-gray-400 mb-12">My professional journey</p>
+        <SectionHeading title="Flight_Log" subtitle="Experience and education" />
         <div className="max-w-4xl mx-auto space-y-12">
           {experiences.map((exp, idx) => {
             const { title, company, location, type, description, startDate, endDate, isCurrent, skills } =

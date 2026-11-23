@@ -1,3 +1,4 @@
+import SectionHeading from './SectionHeading';
 import { getTools } from '@/lib/api';
 
 interface Tool {
@@ -69,11 +70,8 @@ export default async function ToolboxSection() {
   return (
     <section id="toolbox" className="section bg-slate-950">
       <div className="container mx-auto px-4">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold mb-2 glow-text font-mono uppercase tracking-wider">Inventory_System</h2>
-          <div className="h-0.5 w-32 bg-cyan-400"></div>
-        </div>
-        
+        <SectionHeading title="Inventory_System" subtitle="Hardware, software and methods I work with" />
+
         <div className="space-y-12 animate-scanline">
           {renderToolCategory(hardware, 'Hardware', '⚙')}
           {renderToolCategory(software, 'Software', '▣')}

@@ -2,7 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 @layer base {
   * {
@@ -80,5 +92,23 @@
   
   .prose li {
     @apply mb-2;
+  }
+}
+
+@layer components {
+  .system-bar {
+    @apply fixed top-0 inset-x-0 z-50 h-16 bg-slate-950/90 backdrop-blur-md border-b border-slate-800;
+  }
+
+  .led-indicator {
+    @apply w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)] animate-pulse;
+  }
+
+  .corner-bracket {
+    @apply py-1 border border-transparent hover:border-cyan-400/40 transition-colors;
+  }
+
+  .data-plate {
+    @apply p-4 bg-slate-900/60 border border-slate-800 rounded-md;
   }
 }

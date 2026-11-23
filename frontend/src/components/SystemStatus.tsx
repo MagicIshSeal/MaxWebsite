@@ -7,12 +7,11 @@ export default function SystemStatus() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between text-[10px] font-mono text-slate-600 uppercase tracking-wider">
           <div className="flex items-center gap-6">
-            <span>HOST: <span className="text-cyan-400">DOCKER_COMPOSE</span></span>
-            <span className="hidden sm:inline">REGION: <span className="text-cyan-400">EU_WEST</span></span>
+            <span>HOST: <span className="text-cyan-400">GITHUB_PAGES</span></span>
           </div>
           
           <div className="flex items-center gap-6">
-            <span className="hidden md:inline">LAST_DEPLOY: <span className="text-cyan-400">{buildDate}</span></span>
+            <span className="hidden md:inline">LAST_BUILD: <span className="text-cyan-400">{buildDate}</span></span>
             <span>BUILD: <span className="text-cyan-400">{version}</span></span>
           </div>
         </div>
