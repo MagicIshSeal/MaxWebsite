@@ -14,13 +14,7 @@ export default function ModelViewer({ modelUrl }: ModelViewerProps) {
   const [clientModelUrl, setClientModelUrl] = useState('');
 
   useEffect(() => {
-    // Convert server-side URL to client-side URL
-    let url = modelUrl;
-    if (url.includes('strapi:1337')) {
-      url = url.replace('http://strapi:1337', 'http://localhost:1337');
-    } else if (!url.startsWith('http')) {
-      url = `http://localhost:1337${url}`;
-    }
+    const url = modelUrl;
     setClientModelUrl(url);
   }, [modelUrl]);
 

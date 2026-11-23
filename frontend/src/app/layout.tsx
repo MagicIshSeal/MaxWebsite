@@ -5,8 +5,8 @@ import SystemStatus from '@/components/SystemStatus';
 import { getAbout } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'Engineering Portfolio',
-  description: 'Technical Project Portfolio',
+  title: 'Max van Eikeren | Engineering Portfolio',
+  description: 'Engineering projects, experience and tools by Max van Eikeren.',
 };
 
 export default async function RootLayout({

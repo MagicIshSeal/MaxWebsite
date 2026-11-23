@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "attributes": {
+      "name": "Soldering iron",
+      "category": "hardware",
+      "proficiency": "intermediate",
+      "description": "PLACEHOLDER",
+      "order": 1
+    }
+  },
+  {
+    "id": 2,
+    "attributes": {
+      "name": "SolidWorks",
+      "category": "software",
+      "proficiency": "intermediate",
+      "description": "PLACEHOLDER",
+      "order": 2
+    }
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "id": 1,
+  "attributes": {
+    "name": "Max van Eikeren",
+    "tagline": "Engineering student & builder",
+    "bio": "PLACEHOLDER: replace with your bio.",
+    "detailedBio": "PLACEHOLDER: a longer bio goes here.",
+    "location": "Netherlands",
+    "heroTitle": "Engineering Portfolio",
+    "heroSubtitle": "Placeholder content: projects, experience and tools will appear here.",
+    "ctaButtonText": "View Projects",
+    "ctaButtonLink": "#projects",
+    "socialLinks": [
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/MagicIshSeal"
+      }
+    ],
+    "skills": [
+      "CAD",
+      "Embedded",
+      "Python"
+    ]
+  }
+}

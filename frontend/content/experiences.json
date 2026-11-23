@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "attributes": {
+      "title": "Placeholder Role",
+      "company": "Placeholder Company",
+      "location": "Netherlands",
+      "type": "work",
+      "description": "PLACEHOLDER description.",
+      "startDate": "2023-09-01",
+      "isCurrent": true,
+      "skills": [
+        "Teamwork"
+      ],
+      "order": 1
+    }
+  }
+]

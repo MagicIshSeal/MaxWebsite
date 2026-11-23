@@ -1,9 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getProject, getStrapiMedia } from '@/lib/api';
+import { getProject, getProjects, getStrapiMedia } from '@/lib/api';
 import ModelViewer from '@/components/ModelViewer';
 import CodeSnippet from '@/components/CodeSnippet';
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((p: any) => ({ id: String(p.id) }));
+}
 
 export default async function ProjectPage({ params }: { params: { id: string } }) {
   const project = await getProject(params.id);

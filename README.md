@@ -104,7 +104,7 @@ docker-compose down
 **Access URLs:**
 - Website: http://localhost:3000
 - Strapi Admin: http://localhost:1337/admin
-- PostgreSQL: localhost:5432
+- PostgreSQL: internal only (not published)
 
 ### 4. Production Deployment
 
@@ -290,9 +290,9 @@ Visit http://localhost:3000 (or your domain) to see your portfolio!
 docker ps
 
 # View logs for specific service
-docker-compose logs -f frontend
-docker-compose logs -f strapi
-docker-compose logs -f postgres
+docker-compose logs -f max_frontend
+docker-compose logs -f max_strapi
+docker-compose logs -f max_postgres
 
 # Restart specific service
 docker-compose restart strapi
@@ -504,3 +504,20 @@ After setup:
 ---
 
 **Built with ❤️ using Next.js, Strapi, and Docker**
+
+
+## Hosting on GitHub Pages (static export)
+
+The live site is a static export deployed by `.github/workflows/deploy.yml` on every push to `main`
+(Settings → Pages → Source: GitHub Actions). It reads the content snapshot in `frontend/content/` and
+`frontend/public/content/media/`, so Strapi is only needed locally.
+
+Updating content:
+
+```bash
+docker compose up -d                 # start Strapi + Postgres, edit at http://localhost:1337/admin
+cd frontend && npm run export-content  # snapshot content + media (Public role needs find/findOne)
+git add -A && git commit -m "Update content" && git push
+```
+
+Local preview against live Strapi: `USE_STRAPI=1 npm run dev` in `frontend/`.

@@ -4,8 +4,6 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ExperienceSection from '@/components/ExperienceSection';
 import ToolboxSection from '@/components/ToolboxSection';
 
-export const revalidate = 60; // Revalidate every 60 seconds
-
 export default async function Home() {
   const [about, projects, experiences] = await Promise.all([
     getAbout(),

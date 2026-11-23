@@ -35,79 +35,51 @@ export interface AboutAttributes {
   skills?: string[];
 }
 
-// Use internal Docker network URL for server-side requests
-const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://strapi:1337';
-// Use localhost for client-side requests (browser)
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+import aboutData from '../../content/about.json';
+import projectsData from '../../content/projects.json';
+import experiencesData from '../../content/experiences.json';
+import toolsData from '../../content/tools.json';
 
-const api = axios.create({
-  baseURL: `${STRAPI_API_URL}/api`,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+// Live mode (local dev against Strapi): USE_STRAPI=1. Otherwise read the committed snapshot
+// produced by `npm run export-content`.
+const USE_STRAPI = process.env.USE_STRAPI === '1';
+const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+async function live(endpoint: string) {
+  const res = await fetch(`${STRAPI_URL}/api${endpoint}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`${endpoint}: ${res.status}`);
+  return (await res.json()).data;
+}
 
 export async function getAbout() {
-  try {
-    const response = await api.get('/about?populate=*');
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching about:', error);
-    return null;
-  }
+  if (!USE_STRAPI) return aboutData as any;
+  try { return await live('/about?populate=*'); } catch (e) { console.error(e); return null; }
 }
 
 export async function getProjects() {
-  try {
-    const response = await api.get('/projects?populate=*&sort=order:asc');
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    return [];
-  }
+  if (!USE_STRAPI) return projectsData as any[];
+  try { return await live('/projects?populate=*&sort=order:asc'); } catch (e) { console.error(e); return []; }
 }
 
 export async function getProject(id: string) {
-  try {
-    const response = await api.get(`/projects/${id}?populate=*`);
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching project:', error);
-    return null;
-  }
+  const projects = await getProjects();
+  return projects.find((p: any) => String(p.id) === String(id)) ?? null;
 }
 
 export async function getExperiences() {
-  try {
-    const response = await api.get('/experiences?populate=*&sort=startDate:desc');
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching experiences:', error);
-    return [];
-  }
+  if (!USE_STRAPI) return experiencesData as any[];
+  try { return await live('/experiences?populate=*&sort=startDate:desc'); } catch (e) { console.error(e); return []; }
 }
 
 export async function getTools() {
-  try {
-    const response = await api.get('/tools?populate=*&sort=order:asc');
-    return response.data.data;
-  } catch (error) {
-    console.error('Error fetching tools:', error);
-    return [];
-  }
-}
-
-export function getStrapiURL(path: string = '') {
-  return `${STRAPI_URL}${path}`;
+  if (!USE_STRAPI) return toolsData as any[];
+  try { return await live('/tools?populate=*&sort=order:asc'); } catch (e) { console.error(e); return []; }
 }
 
 export function getStrapiMedia(url: string | null) {
   if (!url) return null;
   if (url.startsWith('http')) return url;
-  // For server-side rendering, use the internal Docker network URL
-  if (typeof window === 'undefined') {
-    return `${STRAPI_API_URL}${url}`;
-  }
-  // For client-side, use the public URL
-  return getStrapiURL(url);
+  // Snapshot media lives in public/content/media; live mode points at Strapi.
+  return USE_STRAPI ? `${STRAPI_URL}${url}` : `${BASE_PATH}${url}`;
 }

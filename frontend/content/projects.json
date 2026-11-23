@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "attributes": {
+      "title": "Sample Project One",
+      "description": "PLACEHOLDER project description.",
+      "longDescription": "PLACEHOLDER: full write-up goes here.",
+      "type": "personal",
+      "technologies": [
+        "Python",
+        "CAD",
+        "Arduino"
+      ],
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01",
+      "isOngoing": false,
+      "featured": true,
+      "order": 1,
+      "tags": [
+        "placeholder"
+      ],
+      "specifications": {
+        "Mass": {
+          "value": "1.2",
+          "unit": "kg"
+        },
+        "Power": {
+          "value": "50",
+          "unit": "W"
+        }
+      }
+    }
+  },
+  {
+    "id": 2,
+    "attributes": {
+      "title": "Sample Project Two",
+      "description": "PLACEHOLDER project description.",
+      "longDescription": "PLACEHOLDER: full write-up goes here.",
+      "type": "school",
+      "technologies": [
+        "Python",
+        "CAD",
+        "Arduino"
+      ],
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-01",
+      "isOngoing": false,
+      "featured": true,
+      "order": 2,
+      "tags": [
+        "placeholder"
+      ],
+      "specifications": {
+        "Mass": {
+          "value": "1.2",
+          "unit": "kg"
+        },
+        "Power": {
+          "value": "50",
+          "unit": "W"
+        }
+      }
+    }
+  }
+]
